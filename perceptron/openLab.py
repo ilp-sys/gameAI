@@ -1,19 +1,18 @@
 def calculate(input):
     global weights, bias
-    activation = 0
+    activation = bias
     for i in range(2):
-        activation += weights[i] * input[i]
-    activation += bias
-    if activation >= 0: #step function
+        activation += weights[i]*input[i]
+    if activation >= 0:
         return 1
     else:
         return 0
 
-def train_weights(X, y, l_rate, n_epoch):
+def train_weights(X, y, l_rate, epoch):
     global weights, bias
     for epoch in range(n_epoch):
         sum_error = 0
-        for row, target in zip(X,y):
+        for row, target in zip(X, y):
             actual = calculate(row)
             error = target - actual
             bias = bias + l_rate * error
@@ -21,16 +20,20 @@ def train_weights(X, y, l_rate, n_epoch):
             for i in range(2):
                 weights[i] = weights[i] + l_rate * error * row[i]
             print(weights, bias)
-        print("epoch = %d>> l_rate = %3f, error= %3f" %(epoch, l_rate, sum_error))
+        print("epochNum=%d>> l_rate=%.3f, error=%.3f"%(epoch, l_rate, sum_error))
     return weights
 
-X = [[0,0], [0,1], [1,0], [1,1]]
-y = [0,0,0,1]
+X = [[160,55], [163,43], [165,48], [170,80], [175,76],[180,70]]
+y = [1,1,1,0,0,0]
 
 weights = [0,0]
-bias = 0
+bias  = 0
 
 l_rate = 0.1
-n_epoch = 5
-weights = train_weights(X, y, l_rate, n_epoch)
-print((weights, bias))
+n_epoch =  5
+weights = train_weights(X, y, l_rate, epoch)
+print(weights, bias)
+
+
+
+
